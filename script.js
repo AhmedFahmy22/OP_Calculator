@@ -4,6 +4,8 @@ let op2 = "";
 let operator = "";
 let result = NaN;
 let currentState = "operand 1"
+let op1_decimalPoint = 0;
+let op2_decimalPoint = 1;
 
 numbersNode = document.querySelector("#num-buttons");
 cntrlNode = document.querySelector("#ctrl-buttons");
@@ -14,17 +16,11 @@ numbersNode.addEventListener("click", function(event) {
     if(event.target.childElementCount === 0) {
         switch(currentState) {
             case "operand 1":
-                if(op1==="0") {
-                    op1="";
-                }
-                op1 += event.target.textContent;
+                op1 = updateOperand(op1, event.target.textContent);
                 displayText = op1;
                 break;
             case "operand 2":
-                if(op2==="0") {
-                    op2="";
-                }
-                op2 += event.target.textContent;
+                op2 = updateOperand(op2, event.target.textContent);
                 displayText = `${op1} ${operator} ${op2}`;
                 break;
         }
@@ -133,4 +129,22 @@ function resetCalculator() {
 function displayError() {
     resetCalculator();
     displayText = "Error: division by 0"
+}
+
+function updateOperand(operand, input) {
+    let newOperand = undefined;
+    if((input===".") && operand.includes(".")) {
+        newOperand = operand;
+    }
+    else {
+        if(operand==="0") {
+            operand="";
+        }
+        
+        if((operand==="") && (input===".")) {
+            operand="0";
+        }
+        newOperand = operand + input;
+    }
+    return newOperand;
 }
