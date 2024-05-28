@@ -1,6 +1,7 @@
 body * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 li {
@@ -15,6 +16,7 @@ li {
 
 #calc-display {
     border: 1px solid red;
+    height: 3em;
     font-size: 24px;
     padding: 1em 1em;
 }
@@ -22,7 +24,7 @@ li {
 .calc-btn {
     border: 1px solid grey;
     font-size: 18px;
-    width: 2em;
+    width: 5em;
     text-align: center;
     padding: 0.2em 1em;
 }

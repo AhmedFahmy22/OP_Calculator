@@ -1,3 +1,19 @@
+let displayText = "";
+
+numbersNode = document.querySelector("#num-buttons");
+displayNode = document.querySelector("#calc-display");
+
+numbersNode.addEventListener("click", function(event) {
+    if(displayText==="0") {
+        displayText = "";
+    }
+    displayText += event.target.textContent;
+    displayNode.textContent = displayText;
+})
+
+
+
+
 function add(operand1, operand2) {
     return (Number(operand1) + Number(operand2));
 }
