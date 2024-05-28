@@ -2,6 +2,7 @@ let displayText = "";
 let op1 = "";
 let op2 = "";
 let operator = "";
+let result = NaN;
 let currentState = "operand 1"
 
 numbersNode = document.querySelector("#num-buttons");
@@ -39,9 +40,15 @@ cntrlNode.addEventListener("click", function(event) {
                 resetCalculator();
                 break;
             case "=":
-                if(currentState==="operand 2") {
-                    displayText = `${op1} ${operator} ${op2} = ${operate(operator, op1, op2)}`;
-                    currentState = "result";
+                if(currentState==="operand 2") {    
+                    result = operate(operator, op1, op2);
+                    if(result===undefined) {
+                        displayError();
+                    }
+                    else {
+                        displayText = `${op1} ${operator} ${op2} = ${result}`;
+                        currentState = "result";
+                    }
                 }
         }
         displayNode.textContent = displayText;
@@ -51,14 +58,25 @@ cntrlNode.addEventListener("click", function(event) {
 operatorsNode.addEventListener("click", function(event) {
     if(event.target.childElementCount === 0) {
         if(currentState==="operand 1") {
-            currentState = "operand 2";
             if(op1==="") {
                 op1 = "0";
             }
+        }
+        else {
+            op1 = operate(operator, op1, op2);
+            op2 = "";
+        }
+
+        if(op1===undefined) {
+            displayError();
+        }
+        else {
+            currentState = "operand 2";
             operator = event.target.textContent;
             displayText = `${op1} ${operator} `;
-            displayNode.textContent = displayText;
-        } 
+        }
+        
+        displayNode.textContent = displayText;
     }
 })
 
@@ -93,7 +111,12 @@ function operate(operator, operand1, operand2) {
             result = multiply(operand1, operand2);
             break;
         case '/':
-            result = divide(operand1, operand2);
+            if(Number(operand2)===0) {
+                result = undefined;
+            }
+            else {
+                result = divide(operand1, operand2);
+            }
             break;
     }
     return result;
@@ -105,4 +128,9 @@ function resetCalculator() {
     op2 = "";
     operator = "";
     currentState = "operand 1";
+}
+
+function displayError() {
+    resetCalculator();
+    displayText = "Error: division by 0"
 }
