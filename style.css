@@ -27,6 +27,7 @@ li {
     width: 5em;
     text-align: center;
     padding: 0.2em 1em;
+    user-select: none;
 }
 
 #calc-buttons {

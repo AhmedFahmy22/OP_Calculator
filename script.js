@@ -1,27 +1,65 @@
 let displayText = "";
+let op1 = "";
+let op2 = "";
+let operand = "";
+let currentState = "operand 1"
 
 numbersNode = document.querySelector("#num-buttons");
 cntrlNode = document.querySelector("#ctrl-buttons");
+operatorsNode = document.querySelector("#op-buttons");
 displayNode = document.querySelector("#calc-display");
 
 numbersNode.addEventListener("click", function(event) {
-    if(displayText==="0") {
-        displayText = "";
+    if(event.target.childElementCount === 0) {
+        switch(currentState) {
+            case "operand 1":
+                if(op1==="0") {
+                    op1="";
+                }
+                op1 += event.target.textContent;
+                displayText = op1;
+                break;
+            case "operand 2":
+                if(op2==="0") {
+                    op2="";
+                }
+                op2 += event.target.textContent;
+                displayText = `${op1} ${operand} ${op2}`;
+                break;
+        }
+        displayNode.textContent = displayText;
     }
-    displayText += event.target.textContent;
-    displayNode.textContent = displayText;
 })
 
 cntrlNode.addEventListener("click", function(event) {
-    switch(event.target.textContent)
-    {
-        case "clear":
-            displayText = "";
-            break;
+    if(event.target.childElementCount === 0) {
+        switch(event.target.textContent)
+        {
+            case "clear":
+                displayText = "";
+                op1 = "";
+                op2 = "";
+                operand = "";
+                currentState = "operand 1";
+                break;
+        }
+        displayNode.textContent = displayText;
     }
-    displayNode.textContent = displayText;
 })
 
+operatorsNode.addEventListener("click", function(event) {
+    if(event.target.childElementCount === 0) {
+        if(currentState==="operand 1") {
+            currentState = "operand 2";
+            if(op1==="") {
+                op1 = "0";
+            }
+            operand = event.target.textContent;
+            displayText = `${op1} ${operand} `;
+            displayNode.textContent = displayText;
+        } 
+    }
+})
 
 
 
