@@ -1,7 +1,7 @@
 let displayText = "";
 let op1 = "";
 let op2 = "";
-let operand = "";
+let operator = "";
 let currentState = "operand 1"
 
 numbersNode = document.querySelector("#num-buttons");
@@ -24,7 +24,7 @@ numbersNode.addEventListener("click", function(event) {
                     op2="";
                 }
                 op2 += event.target.textContent;
-                displayText = `${op1} ${operand} ${op2}`;
+                displayText = `${op1} ${operator} ${op2}`;
                 break;
         }
         displayNode.textContent = displayText;
@@ -36,12 +36,13 @@ cntrlNode.addEventListener("click", function(event) {
         switch(event.target.textContent)
         {
             case "clear":
-                displayText = "";
-                op1 = "";
-                op2 = "";
-                operand = "";
-                currentState = "operand 1";
+                resetCalculator();
                 break;
+            case "=":
+                if(currentState==="operand 2") {
+                    displayText = `${op1} ${operator} ${op2} = ${operate(operator, op1, op2)}`;
+                    currentState = "result";
+                }
         }
         displayNode.textContent = displayText;
     }
@@ -54,8 +55,8 @@ operatorsNode.addEventListener("click", function(event) {
             if(op1==="") {
                 op1 = "0";
             }
-            operand = event.target.textContent;
-            displayText = `${op1} ${operand} `;
+            operator = event.target.textContent;
+            displayText = `${op1} ${operator} `;
             displayNode.textContent = displayText;
         } 
     }
@@ -96,4 +97,12 @@ function operate(operator, operand1, operand2) {
             break;
     }
     return result;
+}
+
+function resetCalculator() {
+    displayText = "";
+    op1 = "";
+    op2 = "";
+    operator = "";
+    currentState = "operand 1";
 }
