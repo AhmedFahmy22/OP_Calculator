@@ -1,6 +1,7 @@
 let displayText = "";
 
 numbersNode = document.querySelector("#num-buttons");
+cntrlNode = document.querySelector("#ctrl-buttons");
 displayNode = document.querySelector("#calc-display");
 
 numbersNode.addEventListener("click", function(event) {
@@ -8,6 +9,16 @@ numbersNode.addEventListener("click", function(event) {
         displayText = "";
     }
     displayText += event.target.textContent;
+    displayNode.textContent = displayText;
+})
+
+cntrlNode.addEventListener("click", function(event) {
+    switch(event.target.textContent)
+    {
+        case "clear":
+            displayText = "";
+            break;
+    }
     displayNode.textContent = displayText;
 })
 
