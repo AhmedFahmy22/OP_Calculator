@@ -107,7 +107,7 @@ function operate(operator, operand1, operand2) {
         case '-':
             result = subtract(operand1, operand2);
             break;        
-        case '*':
+        case '×':
             result = multiply(operand1, operand2);
             break;
         case '/':
